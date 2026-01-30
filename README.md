@@ -3,7 +3,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/timjohnbancroft/constructor-laravel.svg?style=flat-square)](https://packagist.org/packages/timjohnbancroft/constructor-laravel)
 [![License](https://img.shields.io/packagist/l/timjohnbancroft/constructor-laravel.svg?style=flat-square)](https://packagist.org/packages/timjohnbancroft/constructor-laravel)
 
-A comprehensive Laravel package for [Constructor.io](https://constructor.io) - AI-powered product discovery.
+A Laravel package for [Constructor.io](https://constructor.io) - AI-powered product discovery.
 
 ## Features
 
@@ -20,7 +20,7 @@ A comprehensive Laravel package for [Constructor.io](https://constructor.io) - A
 
 - PHP 8.1+
 - Laravel 10.x or 11.x
-- Constructor.io account ([get one free](https://constructor.io))
+- Constructor.io account ((https://constructor.io))
 
 ## Installation
 
@@ -46,7 +46,7 @@ CONSTRUCTOR_API_TOKEN=your-api-token
 CONSTRUCTOR_AGENT_DOMAIN=your-agent-domain  # Optional: for AI Shopping Agent
 ```
 
-Get your credentials from the [Constructor.io Dashboard](https://dashboard.constructor.io).
+Get your credentials from the [Constructor.io Dashboard](https://app.constructor.io).
 
 ## Quick Start
 
