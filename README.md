@@ -19,7 +19,7 @@ A Laravel package for [Constructor.io](https://constructor.io) - AI-powered prod
 ## Requirements
 
 - PHP 8.1+
-- Laravel 10.x or 11.x
+- Laravel 10.x, 11.x, or 12.x
 - Constructor.io account ((https://constructor.io))
 
 ## Installation
