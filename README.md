@@ -325,8 +325,8 @@ Constructor::getFacetValuesWithImages($facetName, $maxItems);
 
 - [Constructor.io Documentation](https://docs.constructor.io/)
 - [Search API Reference](https://docs.constructor.com/reference/search-search-results)
-- [Recommendations API](https://docs.constructor.com/reference/recommendations-recommendation-results)
-- [AI Agents](https://docs.constructor.com/reference/v1-asa-retrieve-intent)
+- [Recommendations API Reference](https://docs.constructor.com/reference/recommendations-recommendation-results)
+- [AI Shopping Agent API Reference](https://docs.constructor.com/reference/v1-asa-retrieve-intent)
 
 ## Contributing
 
