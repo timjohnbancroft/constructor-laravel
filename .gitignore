@@ -1,0 +1,28 @@
+# Dependencies
+/vendor/
+composer.lock
+
+# IDE and editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+
+# Testing
+.phpunit.result.cache
+.phpunit.cache
+coverage/
+phpunit.xml
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build artifacts
+/build/
+/dist/
+
+# Logs
+*.log

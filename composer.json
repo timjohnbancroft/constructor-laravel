@@ -1,0 +1,54 @@
+{
+    "name": "constructor-io/laravel",
+    "description": "Laravel integration for Constructor.io - AI-powered search, recommendations, and shopping agents",
+    "keywords": ["laravel", "constructor", "search", "ecommerce", "recommendations", "ai", "autocomplete", "product-discovery"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Constructor.io",
+            "email": "support@constructor.io"
+        }
+    ],
+    "homepage": "https://github.com/constructor-io/laravel",
+    "support": {
+        "issues": "https://github.com/constructor-io/laravel/issues",
+        "source": "https://github.com/constructor-io/laravel"
+    },
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^10.0|^11.0",
+        "illuminate/http": "^10.0|^11.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0",
+        "phpunit/phpunit": "^10.0"
+    },
+    "suggest": {
+        "laravel/scout": "Required for Scout integration (^10.0)"
+    },
+    "autoload": {
+        "psr-4": {
+            "ConstructorIO\\Laravel\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ConstructorIO\\Laravel\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ConstructorIO\\Laravel\\ConstructorServiceProvider"
+            ],
+            "aliases": {
+                "Constructor": "ConstructorIO\\Laravel\\Facades\\Constructor"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable"
+}
