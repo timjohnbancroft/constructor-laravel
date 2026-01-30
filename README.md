@@ -1,7 +1,7 @@
 # Constructor.io Laravel Integration
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/constructor-io/laravel.svg?style=flat-square)](https://packagist.org/packages/constructor-io/laravel)
-[![License](https://img.shields.io/packagist/l/constructor-io/laravel.svg?style=flat-square)](https://packagist.org/packages/constructor-io/laravel)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/timjohnbancroft/constructor-laravel.svg?style=flat-square)](https://packagist.org/packages/timjohnbancroft/constructor-laravel)
+[![License](https://img.shields.io/packagist/l/timjohnbancroft/constructor-laravel.svg?style=flat-square)](https://packagist.org/packages/timjohnbancroft/constructor-laravel)
 
 A comprehensive Laravel package for [Constructor.io](https://constructor.io) - AI-powered product discovery.
 
@@ -27,7 +27,7 @@ A comprehensive Laravel package for [Constructor.io](https://constructor.io) - A
 ### 1. Install via Composer
 
 ```bash
-composer require constructor-io/laravel
+composer require timjohnbancroft/constructor-laravel
 ```
 
 ### 2. Publish Configuration

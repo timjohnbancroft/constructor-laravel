@@ -1,5 +1,5 @@
 {
-    "name": "constructor-io/laravel",
+    "name": "timjohnbancroft/constructor-laravel",
     "description": "Laravel integration for Constructor.io - AI-powered search, recommendations, and shopping agents",
     "keywords": ["laravel", "constructor", "search", "ecommerce", "recommendations", "ai", "autocomplete", "product-discovery"],
     "license": "MIT",
@@ -9,10 +9,10 @@
             "email": "support@constructor.io"
         }
     ],
-    "homepage": "https://github.com/constructor-io/laravel",
+    "homepage": "https://github.com/timjohnbancroft/constructor-laravel",
     "support": {
-        "issues": "https://github.com/constructor-io/laravel/issues",
-        "source": "https://github.com/constructor-io/laravel"
+        "issues": "https://github.com/timjohnbancroft/constructor-laravel/issues",
+        "source": "https://github.com/timjohnbancroft/constructor-laravel"
     },
     "require": {
         "php": "^8.1",
