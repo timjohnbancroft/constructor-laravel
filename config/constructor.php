@@ -60,6 +60,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Backend Integration
+    |--------------------------------------------------------------------------
+    |
+    | When making server-side API calls on behalf of browser users, Constructor
+    | requires specific headers and parameters for session tracking,
+    | personalization, and analytics attribution.
+    |
+    | @see https://docs.constructor.com/docs/integrating-with-constructor-backend-integrations-required-parameters
+    |
+    */
+
+    // Backend authentication token (sent as x-cnstrc-token header)
+    // If null, falls back to api_token
+    'backend_token' => env('CONSTRUCTOR_BACKEND_TOKEN'),
+
+    // Client identifier for 'c' query parameter
+    // Format: cio-be-laravel-{company-name}
+    // If null, auto-generates from app.name
+    'client_identifier' => env('CONSTRUCTOR_CLIENT_IDENTIFIER'),
+
+    /*
+    |--------------------------------------------------------------------------
     | HTTP Client Configuration
     |--------------------------------------------------------------------------
     */

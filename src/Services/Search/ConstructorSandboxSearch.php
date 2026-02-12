@@ -6,6 +6,7 @@ use ConstructorIO\Laravel\Contracts\SandboxSearchContract;
 use ConstructorIO\Laravel\DataTransferObjects\AutocompleteResults;
 use ConstructorIO\Laravel\DataTransferObjects\RecommendationResults;
 use ConstructorIO\Laravel\DataTransferObjects\SearchResults;
+use ConstructorIO\Laravel\Traits\BackendRequestContext;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -23,6 +24,8 @@ use Illuminate\Support\Facades\Log;
  */
 class ConstructorSandboxSearch implements SandboxSearchContract
 {
+    use BackendRequestContext;
+
     protected string $apiKey;
 
     protected ?string $apiToken;
@@ -152,6 +155,9 @@ class ConstructorSandboxSearch implements SandboxSearchContract
             if (isset($options['section'])) {
                 $params['section'] = $options['section'];
             }
+
+            // Add backend integration query params
+            $this->addBackendQueryParams($params);
 
             $response = $this->makeRequest($endpoint, $params);
 
@@ -283,6 +289,9 @@ class ConstructorSandboxSearch implements SandboxSearchContract
                 $params[$key] = $value;
             }
 
+            // Add backend integration query params
+            $this->addBackendQueryParams($params);
+
             $response = $this->makeRequest($endpoint, $params);
 
             $products = [];
@@ -406,6 +415,9 @@ class ConstructorSandboxSearch implements SandboxSearchContract
             $params['s'] = $options['session_id'];
         }
 
+        // Add backend integration query params (respects already-set values)
+        $this->addBackendQueryParams($params);
+
         return $params;
     }
 
@@ -513,6 +525,7 @@ class ConstructorSandboxSearch implements SandboxSearchContract
 
         // Use Laravel HTTP client with query params - it handles URL encoding properly
         $response = Http::timeout($this->timeout)
+            ->withHeaders($this->buildBackendHeaders())
             ->retry(
                 config('constructor.retry_times', 2),
                 config('constructor.retry_sleep', 100)
@@ -827,6 +840,9 @@ class ConstructorSandboxSearch implements SandboxSearchContract
                 $params['section'] = $options['section'];
             }
 
+            // Add backend integration query params
+            $this->addBackendQueryParams($params);
+
             $response = $this->makeRequest($endpoint, $params);
 
             return $this->transformRecommendationResponse($podId, $response);
@@ -857,6 +873,9 @@ class ConstructorSandboxSearch implements SandboxSearchContract
             if (isset($options['section'])) {
                 $params['section'] = $options['section'];
             }
+
+            // Add backend integration query params
+            $this->addBackendQueryParams($params);
 
             $response = $this->makeRequest($endpoint, $params);
 
@@ -940,6 +959,9 @@ class ConstructorSandboxSearch implements SandboxSearchContract
             if (isset($options['filters'])) {
                 $params['filters'] = json_encode($options['filters']);
             }
+
+            // Add backend integration query params
+            $this->addBackendQueryParams($params);
 
             $response = $this->makeRequest($endpoint, $params);
 

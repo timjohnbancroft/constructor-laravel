@@ -20,7 +20,8 @@ A comprehensive guide to building e-commerce search experiences with Constructor
 14. [Error Handling](#14-error-handling)
 15. [Testing Your Integration](#15-testing-your-integration)
 16. [Best Practices](#16-best-practices)
-17. [Troubleshooting](#17-troubleshooting)
+17. [Backend Integration](#17-backend-integration)
+18. [Troubleshooting](#18-troubleshooting)
 
 ---
 
@@ -2094,7 +2095,74 @@ Log::info('Constructor search', [
 
 ---
 
-## 17. Troubleshooting
+## 17. Backend Integration
+
+When your Laravel application makes Constructor API calls server-side on behalf of browser users, Constructor requires specific HTTP headers and query parameters to properly track sessions, personalize results, and attribute analytics.
+
+This package handles this automatically via the `BackendRequestContext` trait, which is used by both `ConstructorSandboxSearch` and `ConstructorAgentService`.
+
+### Configuration
+
+Add these optional environment variables to your `.env`:
+
+```env
+# Backend authentication token (sent as x-cnstrc-token header)
+# Falls back to CONSTRUCTOR_API_TOKEN if not set
+CONSTRUCTOR_BACKEND_TOKEN=tok_your_backend_token
+
+# Client identifier for the 'c' query parameter
+# Format: cio-be-laravel-{company-name}
+# Auto-generates from app.name if not set
+CONSTRUCTOR_CLIENT_IDENTIFIER=cio-be-laravel-your-company
+```
+
+### What Gets Forwarded Automatically
+
+**HTTP Headers** (added to every API request):
+
+| Header | Source | Purpose |
+|--------|--------|---------|
+| `X-Forwarded-For` | `request()->ip()` | Geolocation & fraud detection |
+| `User-Agent` | `request()->userAgent()` | Device/browser analytics |
+| `x-cnstrc-token` | Config `backend_token` or `api_token` | Backend authentication |
+
+**Query Parameters** (added to search, browse, autocomplete, recommendations, and agent requests):
+
+| Param | Source | Purpose |
+|-------|--------|---------|
+| `c` | Config `client_identifier` or auto-generated | Client identification |
+| `i` | `ConstructorioID_client_id` cookie | Browser instance tracking |
+| `s` | `ConstructorioID_session_id` cookie | Session tracking |
+| `_dt` | `microtime(true) * 1000` | Request timestamp |
+| `origin_referrer` | `Referer` header | Referrer attribution |
+
+### Cookie Reading
+
+Constructor's JavaScript SDK sets `ConstructorioID_client_id` and `ConstructorioID_session_id` cookies in the browser. These are read directly from `$_COOKIE` (bypassing Laravel's `EncryptCookies` middleware) because they are not encrypted by Laravel.
+
+### Non-HTTP Contexts
+
+All backend integration methods are safe to use in non-HTTP contexts (CLI commands, queue workers, `php artisan tinker`, tests). When no HTTP request is available:
+
+- Headers that depend on `request()` are simply omitted
+- Cookie values return `null` and are skipped
+- The `_dt` timestamp and `c` client identifier are always included
+- No exceptions are thrown
+
+```php
+// This works fine in tinker or a queue job — params are gracefully omitted
+$results = Constructor::search('shoes');
+```
+
+### Backward Compatibility
+
+- Existing deployments without `CONSTRUCTOR_BACKEND_TOKEN` will use `CONSTRUCTOR_API_TOKEN` as fallback
+- Existing deployments without `CONSTRUCTOR_CLIENT_IDENTIFIER` will auto-generate from `app.name`
+- Parameters explicitly passed via `$options` (e.g., `user_id`, `session_id`, `client`) take precedence over auto-detected values
+
+---
+
+## 18. Troubleshooting
 
 ### Configuration Issues
 

@@ -2,6 +2,7 @@
 
 namespace ConstructorIO\Laravel\Services;
 
+use ConstructorIO\Laravel\Traits\BackendRequestContext;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\Log;
  */
 class ConstructorAgentService
 {
+    use BackendRequestContext;
+
     protected string $apiKey;
 
     protected ?string $agentDomain;
@@ -167,10 +170,10 @@ class ConstructorAgentService
                 CURLOPT_RETURNTRANSFER => false,
                 CURLOPT_TIMEOUT => $this->timeout,
                 CURLOPT_CONNECTTIMEOUT => 10,
-                CURLOPT_HTTPHEADER => [
-                    'Accept: text/event-stream',
-                    'Cache-Control: no-cache',
-                ],
+                CURLOPT_HTTPHEADER => array_merge(
+                    ['Accept: text/event-stream', 'Cache-Control: no-cache'],
+                    $this->buildBackendHeadersForCurl()
+                ),
                 CURLOPT_WRITEFUNCTION => function ($ch, $data) use (&$result, $onEvent) {
                     $this->processStreamChunk($data, $result, $onEvent);
 
@@ -418,6 +421,7 @@ class ConstructorAgentService
         $url = $this->baseUrl.$endpoint;
 
         $response = Http::timeout($this->timeout)
+            ->withHeaders($this->buildBackendHeaders())
             ->retry(
                 config('constructor.retry_times', 2),
                 config('constructor.retry_sleep', 100)
@@ -598,6 +602,9 @@ class ConstructorAgentService
         if (isset($options['instance_id'])) {
             $params['i'] = $options['instance_id'];
         }
+
+        // Add backend integration query params (respects already-set values)
+        $this->addBackendQueryParams($params);
     }
 
     /**
