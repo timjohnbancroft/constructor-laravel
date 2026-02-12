@@ -15,6 +15,7 @@ A Laravel package for [Constructor.io](https://constructor.io) - AI-powered prod
 - **Recommendations** - Personalized product recommendations
 - **Collections** - Browse curated product collections
 - **Catalog Management** - Bulk catalog uploads (CSV, JSONL)
+- **Backend Integration** - Automatic forwarding of user context headers and cookies for server-side API calls
 - **Laravel Scout** - Full Scout engine integration
 
 ## Architecture Overview
@@ -76,6 +77,10 @@ Add to your `.env` file:
 CONSTRUCTOR_API_KEY=your-api-key
 CONSTRUCTOR_API_TOKEN=your-api-token
 CONSTRUCTOR_AGENT_DOMAIN=your-agent-domain  # Optional: for AI Shopping Agent
+
+# Optional: Backend integration (for server-side calls on behalf of browser users)
+CONSTRUCTOR_BACKEND_TOKEN=your-backend-token      # Falls back to API_TOKEN if not set
+CONSTRUCTOR_CLIENT_IDENTIFIER=cio-be-laravel-your-company  # Auto-generates if not set
 ```
 
 Get your credentials from the [Constructor.io Dashboard](https://app.constructor.io).
@@ -539,6 +544,10 @@ return [
     'agent_guard' => env('CONSTRUCTOR_AGENT_GUARD', true),
     'agent_num_result_events' => env('CONSTRUCTOR_AGENT_NUM_RESULT_EVENTS', 5),
     'agent_num_results_per_event' => env('CONSTRUCTOR_AGENT_NUM_RESULTS_PER_EVENT', 4),
+
+    // Backend Integration (server-side calls on behalf of browser users)
+    'backend_token' => env('CONSTRUCTOR_BACKEND_TOKEN'),       // Falls back to api_token
+    'client_identifier' => env('CONSTRUCTOR_CLIENT_IDENTIFIER'), // Auto-generates if null
 
     // HTTP Client
     'timeout' => env('CONSTRUCTOR_TIMEOUT', 30),
